@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mrs+Saint+Delafield&family=Open+Sans:wght@400;800&display=swap"><title>Mémoire de A à Z</title>
+<style>
+:root{--bg:#faf8f4;--fg:#22252b;--mut:#6b7078;--card:#fff;--br:#e3ded4;--ac:#1f5f8b;--ac2:#e8f1f7;--ok:#2e7d4f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--fg:#e8e6e1;--mut:#9aa0a8;--card:#1e2229;--br:#333943;--ac:#6db3e0;--ac2:#1f2d3a;--ok:#5fc48a}}
+:root[data-theme="dark"]{--bg:#15181d;--fg:#e8e6e1;--mut:#9aa0a8;--card:#1e2229;--br:#333943;--ac:#6db3e0;--ac2:#1f2d3a;--ok:#5fc48a}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 Georgia,'Times New Roman',serif}
+h1,h2,h3,nav,button,label,summary{font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:18px 16px 8px;max-width:860px;margin:auto}
+header h1{margin:0;font-size:1.5rem}header p{margin:2px 0 0;color:var(--mut);font-size:.9rem}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px;max-width:860px;margin:auto;border-bottom:1px solid var(--br)}
+nav button{white-space:nowrap;border:1px solid var(--br);background:var(--card);color:var(--fg);padding:7px 12px;border-radius:20px;font-size:.85rem;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{max-width:860px;margin:auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--br);border-radius:12px;padding:14px 16px;margin:10px 0}
+.card h3{margin:0 0 6px;font-size:1.02rem}.mut{color:var(--mut);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.btn{display:inline-block;background:var(--ac);color:#fff;border:0;border-radius:8px;padding:9px 14px;font-size:.9rem;cursor:pointer;margin:4px 6px 4px 0}
+.btn.alt{background:var(--ac2);color:var(--ac)}
+details{background:var(--card);border:1px solid var(--br);border-radius:10px;margin:8px 0;padding:10px 14px}
+summary{cursor:pointer;font-weight:600}
+details ul{margin:8px 0 0;padding-left:20px}
+.step .n{display:inline-block;background:var(--ac);color:#fff;border-radius:50%;width:26px;height:26px;text-align:center;line-height:26px;font:600 .8rem system-ui;margin-right:8px}
+.k{font:600 .72rem system-ui;text-transform:uppercase;color:var(--ac);letter-spacing:.04em;margin-top:6px;display:block}
+input,select,textarea{width:100%;padding:9px;border:1px solid var(--br);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit;margin:4px 0 10px}
+label{font-size:.85rem;font-weight:600}
+.bar{height:8px;background:var(--br);border-radius:6px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.chk{display:flex;gap:8px;align-items:flex-start;margin:4px 0;font-size:.95rem}.chk input{width:auto;margin:5px 0 0}
+.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.85rem}td,th{border:1px solid var(--br);padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--ac2)}
+pre{white-space:pre-wrap;background:var(--ac2);padding:10px;border-radius:8px;font:.85rem/1.5 system-ui;margin:6px 0}
+@media print{header,nav,footer,.noprint{display:none!important}main{padding:0;max-width:none}@page{size:A4 landscape;margin:0}}
+footer{max-width:860px;margin:auto;padding:16px;text-align:center;color:var(--mut);font:.8rem system-ui}
+.bad{color:#b3372c}.good{color:var(--ok)}
+</style></head><body>
+<header><h1>📚 Mémoire de A à Z</h1><p>Guide méthodologique : ce que tu dois faire, comment, pourquoi, et comment vérifier.<br>Site conçu par <b>Wadley PIERRE</b>, directeur du programme.</p></header>
+<nav id="nav"></nav><main id="main"></main><footer>© Conçu par Wadley PIERRE · Programme « Mémoire de A à Z » · MARC COLBERT PIERRE</footer>
+<script>
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const TABS=[['home','🏠 Accueil'],['parcours','🧭 Parcours'],['cours','📖 Cours'],['outils','🧰 Outils'],['modeles','📂 Modèles'],['exo','🧪 Quiz'],['jury','🎤 Jury'],['cert','🏅 Certificat'],['simu','🎓 Simulateur'],['check','✅ Checklists'],['univ','🏛️ Université'],['biblio','📚 Biblio & FAQ']];
+const STEPS=[
+['💡','Trouver une idée','Pars d\'une observation, d\'une expérience, d\'un problème social, d\'une lacune de la littérature.','Un bon sujet naît d\'un vrai questionnement.','Tu peux décrire ton idée en 2 phrases.'],
+['🎯','Construire le sujet','Délimite : Qui ? Quoi ? Où ? Quand ? Pourquoi ? Comment ?','Un sujet trop large est infaisable.','Les 6 questions ont une réponse.'],
+['🔎','Problématique','Contexte → phénomène → connaissances existantes → limites → lacune → question centrale → justification.','C\'est le moteur de tout le mémoire.','Elle montre un problème, pas juste une question.'],
+['❓','Question de recherche','Formule une question principale et 2-3 questions spécifiques.','Elle guide le choix de la méthode.','Elle est claire, précise, réalisable.'],
+['🧠','Hypothèses','Formule des hypothèses testables reliant variables (VI → VD).','Elles orientent la collecte et l\'analyse.','Chaque hypothèse contient des variables mesurables.'],
+['📊','Variables et indicateurs','Concept → dimension → variable → indicateur → mode de mesure.','Sans indicateurs, on ne peut pas mesurer.','Chaque variable a au moins un indicateur.'],
+['📚','Revue de littérature','Cherche, lis, fais des fiches, compare, repère convergences, divergences, lacunes.','Elle situe ta recherche dans le savoir existant.','Ce n\'est pas une suite de résumés d\'auteurs.'],
+['🧠','Cadre théorique','Choisis une théorie, justifie-la, applique-la à ton sujet.','Elle donne un angle d\'analyse.','Tu sais comment elle servira à l\'analyse.'],
+['🗂️','Cadre conceptuel','Concepts → dimensions → variables → indicateurs, avec un schéma des relations.','Il clarifie le vocabulaire de ta recherche.','Chaque concept clé est défini avec une source.'],
+['🔬','Méthodologie','Choisis approche (quanti/quali/mixte) et type de recherche selon ta question.','La méthode dépend de la question, pas l\'inverse.','Tu peux justifier chaque choix.'],
+['👥','Population et échantillon','Définis population cible, accessible, méthode et taille d\'échantillon.','Détermine la portée de tes résultats.','Ton choix est justifié.'],
+['📝','Instrument de collecte','Construis questionnaire, guide d\'entretien ou grille, puis prétest.','Un mauvais instrument donne de mauvaises données.','Prétesté, validé, cohérent avec les indicateurs.'],
+['📥','Collecte des données','Applique la procédure, avec consentement et anonymat.','Données fiables et éthiques.','Checklist de collecte complétée.'],
+['📊','Traitement et analyse','Quanti : codage, nettoyage, statistiques. Quali : transcription, codage, thèmes.','Transforme les données brutes en informations.','Chaque hypothèse/question a son analyse.'],
+['📈','Présenter les résultats','Tableaux, figures, commentaire sans interprétation.','Résultat ≠ interprétation.','Tableaux numérotés, titrés, commentés.'],
+['💬','Discussion','Résultat → comparaison avec la littérature → interprétation → implications.','C\'est là que tu apportes ta valeur.','Tu réponds à la question de recherche.'],
+['✍️','Conclusion et recommandations','Synthèse, limites, contribution, pistes futures, recommandations.','Clôt la démarche.','Aucune idée nouvelle n\'apparaît.'],
+['📚','Références','Norme imposée, zéro source inventée, tout cité = référencé.','Crédibilité et intégrité.','Vérifié dans les sources originales.'],
+['📝','Mise en forme','Styles Word, table des matières automatique, légendes, pagination.','Un document propre et modifiable sans tout recommencer.','PDF final relu.'],
+['🎤','Soutenance','Prépare un diaporama, répète, anticipe les questions du jury.','Défendre ses choix.','Tu tiens le temps imparti et sais justifier chaque choix.']];
+const COURS=[
+['Comprendre le mémoire',['Mémoire : travail de recherche structuré, démontrant ta capacité à mener une démarche scientifique. Diffère du rapport (compte rendu d\'activité), de la dissertation (argumentation sans données originales) et de la thèse (contribution originale, niveau doctoral).','Quanti : mesurer, chiffrer, tester. Quali : comprendre sens, perceptions, expériences.','Définitions : problématique, hypothèse, théorie, concept, variable, indicateur.','❌ Erreurs fréquentes : sujet trop large ; thème ≠ sujet ; problématique réduite à une question ; hypothèses sans variables ; sources inexistantes ; copier-coller ; bibliographie sans citations ; normes mélangées.']],
+['Choisir et délimiter le sujet',['Sources d\'idées : observation, expérience, problème social, théorie, recherche antérieure, lacune, phénomène actuel.','Exemple : Santé mentale → étudiants → Université X → 2026-2027 → stress académique.','Délimiter : Qui (population) ? Quoi (phénomène) ? Où ? Quand ? Pourquoi (intérêt) ? Comment (approche) ?']],
+['Problématique et question de recherche',['Construis-la en 8 questions : 1 Quel contexte ? 2 Quel phénomène observé ? 3 Que sait-on ? 4 Que disent les recherches ? 5 Quelles limites/contradictions ? 6 Quelle lacune ? 7 Quelle question centrale ? 8 Pourquoi est-ce important ?','Question générale → principale → spécifiques. Ex. : Quelle relation entre X et Y chez Z ? Quels facteurs associés à X ? Comment les participants perçoivent X ?']],
+['Hypothèses, variables, indicateurs',['Types : générale, spécifique, directionnelle, non directionnelle, nulle. Elle doit être testable.','Ex. : Il existe une relation entre X et Y chez Z. VI → VD.','Variable : ce qui varie. Indicateur : élément observable qui la mesure.']],
+['Revue de littérature',['Chercher : Google Scholar, bibliothèques, bases de données, archives ouvertes, mémoires et thèses.','Évaluer la fiabilité ; lire vite (titre, résumé, conclusion) ; faire une fiche de lecture.','Comparer auteurs : convergences, divergences, lacunes → synthèse thématique, jamais une succession de résumés.']],
+['Cadres théorique et conceptuel',['Théorie → concepts principaux → relations → application au sujet → usage dans l\'analyse. Justifie ton choix.','Cadre conceptuel : concepts → dimensions → variables → indicateurs, avec un schéma.']],
+['Méthodologie',['Approches : quantitative, qualitative, mixte.','Types : descriptive, exploratoire, corrélationnelle, explicative, expérimentale, étude de cas, recherche-action, comparative.','Le choix découle de la question de recherche, pas d\'une liste.']],
+['Population et échantillonnage',['Population cible, accessible, échantillon, taille.','Probabilistes : aléatoire simple, systématique, stratifié, grappes.','Non probabilistes : convenance, raisonné, boule de neige, quotas.','Toujours justifier ton choix et reconnaître ses limites.']],
+['Collecte des données',['Questionnaire : questions ouvertes/fermées, Likert, choix multiples, consignes, ordre, prétest.','Entretien : structuré, semi-directif, non directif ; guide, conduite, transcription.','Observation : participante ou non ; grille.','Analyse documentaire : archives, rapports, articles, statistiques.']],
+['Qualité des instruments',['Validité, fiabilité, prétest, cohérence, biais, limites.','En qualitatif, utilise les critères adaptés à l\'approche (crédibilité, transférabilité, etc.).']],
+['Éthique de la recherche',['Consentement éclairé, confidentialité, anonymat, protection des données, droit de retrait, respect des participants, risques, autorisations institutionnelles, traitement responsable des données.']],
+['Traitement des données',['Quanti : codage, saisie, nettoyage, tableaux, fréquences, %, moyenne, médiane, écart-type, tests adaptés.','Quali : transcription, lecture, codage, catégories, thèmes/sous-thèmes, analyse thématique, interprétation.']],
+['Résultats et discussion',['Résultats : tableaux, figures, graphiques, commentaire factuel, sans répétition inutile.','Discussion : Que montre mon résultat ? Cohérent avec la littérature ? En quoi diffère-t-il ? Quelles explications ? Quelles implications raisonnables ?']],
+['Rédaction : architecture',['Préliminaires : couverture, page de garde, dédicace, remerciements, résumé, mots-clés, abstract, tables des matières/tableaux/figures, sigles.','Corps : Introduction, Ch.1 Problématique, Ch.2 Revue/cadre théorique, Ch.3 Méthodologie, Ch.4 Résultats, Ch.5 Discussion, Conclusion, Recommandations, Références, Annexes.','⚠️ Cette structure varie selon faculté, département et consignes.']],
+['Citations et références',['Normes : APA, Vancouver, Chicago, MLA, autres.','Règle : la norme officielle de l\'établissement prime.']],
+['Plagiat et intégrité',['Formes : plagiat direct, paraphrase trop proche, absence de citation, autoplagiat, citation incorrecte, usage abusif, références fabriquées, falsification/fabrication de données.','Paraphraser : lire → comprendre → fermer la source → reformuler → comparer → citer.','Citer : toute idée, donnée ou citation empruntée. Citation directe : guillemets + page.']],
+['Soutenance',['Présenter : problème, méthodologie, résultats principaux, limites, recommandations. Gérer le temps ; répondre calmement.','Questions du jury : Pourquoi ce sujet ? cette population ? cette méthode ? cet échantillon ? cette théorie ? Quelles limites ? Quelle contribution ?']]];
+const OUTILS=[
+['🤖 IA et mémoire',['L\'IA générative peut halluciner : fausses références, fausses citations, données inventées.','Attention : confidentialité, propriété intellectuelle, règles de ton établissement.','Règle : l\'IA n\'est pas une source scientifique parce qu\'elle est convaincante. Toute référence suggérée doit être vérifiée dans la source originale.']],
+['📑 Zotero (12 modules)',['1 Installer · 2 Créer une bibliothèque · 3 Collections · 4 Ajouter des articles · 5 Zotero Connector · 6 Importer des PDF · 7 Corriger les métadonnées · 8 Ajouter par DOI/ISBN · 9 Insérer une citation dans Word · 10 Insérer la bibliographie · 11 Changer de style · 12 Actualiser.','Pour les instructions détaillées, renvoie à la documentation officielle de Zotero (zotero.org/support).']],
+['💻 Word pour le mémoire',['Styles : Titre 1, 2, 3, Normal → utilise-les au lieu de taper les titres à la main.','Mise en page : marges, orientation, sections, sauts de page.','Pagination : préliminaires (romains), corps (arabes), annexes.','Références → Table des matières automatique ; liste des tableaux/figures via les légendes ; renvois ; notes de bas de page ; en-têtes/pieds.','Recherche/remplacement, orthographe, export PDF.','Ordre : Styles → titres → numérotation → table des matières → légendes → listes → références → pagination.']],
+['🧰 Boîte à outils',['Recherche : Google Scholar, bibliothèques universitaires, bases de données, archives ouvertes.','Bibliographie : Zotero. Rédaction : Word, LibreOffice, Google Docs.','Données : Excel, logiciels statistiques, outils d\'analyse qualitative.','Collecte : formulaires en ligne, papier, entretien, observation.']]];
+const MODELES=[
+['Problématique','Contexte : …\nPhénomène observé : …\nCe que disent les recherches : …\nLimites/contradictions : …\nLacune : …\nQuestion centrale : …\nJustification : …'],
+['Question de recherche','Question principale : …\nQuestion spécifique 1 : …\nQuestion spécifique 2 : …\nPopulation / lieu / période : …'],
+['Hypothèses','H1 (générale) : Il existe une relation entre [VI] et [VD] chez [population].\nH1a : …\nH1b : …\nH0 : Il n\'existe pas de relation entre …'],
+['Variables / indicateurs','Concept | Variable | Dimension | Indicateur | Mode de mesure\n… | … | … | … | …'],
+['Guide d\'entretien','Introduction (présentation, consentement, durée) :\nThème 1 : questions / relances\nThème 2 : questions / relances\nConclusion (remerciements, ajout éventuel) :'],
+['Questionnaire','Consigne : …\nSection A – Profil (âge, sexe, niveau…)\nSection B – Questions fermées (échelle de Likert 1-5)\nSection C – Questions ouvertes\nRemerciements'],
+['Formulaire de consentement','Titre de la recherche : …\nChercheur : …\nObjectif : …\nParticipation volontaire, droit de retrait à tout moment.\nConfidentialité et anonymat garantis.\nJ\'accepte de participer : Nom … Date … Signature …'],
+['Grille d\'observation','Date/lieu : …\nComportement observé | Fréquence | Contexte | Remarques'],
+['Fiche de lecture','Référence complète : …\nQuestion/objectif : …\nMéthode : …\nRésultats principaux : …\nLimites : …\nUtilité pour mon mémoire : …\nCitations utiles (avec page) : …'],
+['Tableau de revue de littérature','Auteur (année) | Objectif | Méthode | Résultats | Limites | Lien avec mon sujet'],
+['Plan de mémoire','Introduction\nCh.1 Problématique\nCh.2 Revue de littérature / cadre théorique\nCh.3 Méthodologie\nCh.4 Résultats\nCh.5 Discussion\nConclusion et recommandations\nRéférences · Annexes'],
+['Guide de soutenance','1 Contexte et problème (2 min)\n2 Question et hypothèses\n3 Méthodologie\n4 Résultats principaux\n5 Limites\n6 Recommandations\n7 Questions du jury']];
+const CH_COL=['Instrument terminé','Instrument prétesté','Population définie','Échantillon défini','Autorisation obtenue si nécessaire','Consentement préparé','Procédure définie','Données anonymisées','Système de stockage préparé'];
+const CH_FIN={'Contenu':['Sujet cohérent','Problématique cohérente','Question de recherche claire','Hypothèses cohérentes','Variables définies','Cadre théorique présent','Méthodologie justifiée','Données correctement présentées','Discussion réalisée','Conclusion réalisée'],'Références':['Toutes les sources citées sont référencées','Toutes les références sont réellement citées','Norme bibliographique respectée','DOI/URL vérifiés','Aucune référence inventée'],'Présentation':['Table des matières automatique','Pagination correcte','Titres uniformes','Tableaux numérotés','Figures numérotées','Annexes numérotées','Orthographe vérifiée','PDF final vérifié']};
+const QZ=[
+['Sujet et problématique','« Les réseaux sociaux sont-ils mauvais ? » Que faut-il corriger ?',['Rien, c\'est une bonne question','Trop vague : préciser population, phénomène, lieu, période','Ajouter une hypothèse'],1,'Un sujet doit être délimité (qui, quoi, où, quand).'],
+['Sujet et problématique','Quelle différence entre thème et sujet ?',['Aucune','Le thème est général, le sujet est délimité','Le sujet est plus large que le thème'],1,'Ex. : « Santé mentale » (thème) → « Stress académique des étudiants de l\'université X en 2026-2027 » (sujet).'],
+['Sujet et problématique','Une problématique est…',['Une simple question','Un problème scientifique issu d\'une lacune, débouchant sur une question centrale','Un résumé du sujet'],1,'Elle part du contexte et des limites des recherches, identifie une lacune, puis pose la question.'],
+['Sujet et problématique','Qu\'est-ce qui distingue une bonne question de recherche ?',['Elle est claire, précise et réalisable','Elle admet oui/non','Elle est très générale'],0,'La question guide la méthode : elle doit être précise et faisable.'],
+['Hypothèses et variables','Hypothèse : « Le stress affecte la réussite. » Quelle est la variable dépendante ?',['Le stress','La réussite','Les étudiants'],1,'La VD est ce qui est influencé : la réussite. Le stress est la VI.'],
+['Hypothèses et variables','Un indicateur de « niveau de stress » est…',['Fréquence des symptômes rapportés','Le mot « stress »','L\'université'],0,'Un indicateur est un élément observable qui permet de mesurer la variable.'],
+['Hypothèses et variables','Une hypothèse doit être…',['Testable','Toujours vraie','Un jugement de valeur'],0,'Elle relie des variables mesurables et peut être confirmée ou infirmée.'],
+['Hypothèses et variables','« Le stress diminue la réussite » est une hypothèse…',['Non directionnelle','Directionnelle','Nulle'],1,'Elle précise le sens de la relation. Non directionnelle : « il existe une relation ».'],
+['Revue de littérature','La revue de littérature doit être…',['Une suite de résumés d\'auteurs','Une synthèse comparant convergences, divergences et lacunes','Une liste de définitions'],1,'On organise par thèmes, pas auteur par auteur.'],
+['Revue de littérature','Quelle source est la plus fiable ?',['Un blog anonyme','Un article scientifique évalué par les pairs','Un post de forum'],1,'Privilégie articles scientifiques, ouvrages universitaires, documents institutionnels.'],
+['Revue de littérature','Une fiche de lecture sert à…',['Recopier l\'article','Résumer objectif, méthode, résultats, limites et utilité pour ton mémoire','Remplacer la bibliographie'],1,'Elle facilite la comparaison des auteurs.'],
+['Cadres théorique et conceptuel','Le cadre conceptuel suit la logique…',['Concepts → dimensions → variables → indicateurs','Résultats → hypothèses','Auteurs → dates'],0,'Il précise et opérationnalise les concepts.'],
+['Cadres théorique et conceptuel','Choisir une théorie implique de…',['La recopier','La justifier et l\'appliquer à son sujet','La citer une fois'],1,'Elle doit servir l\'analyse.'],
+['Méthodologie et échantillon','Le choix de la méthode dépend…',['De la question de recherche','De ce qui est le plus facile','De l\'avis des amis'],0,'La méthode découle de la question, pas d\'une liste.'],
+['Méthodologie et échantillon','Quel échantillonnage est probabiliste ?',['Boule de neige','Aléatoire simple','Convenance'],1,'Probabilistes : aléatoire simple, systématique, stratifié, grappes.'],
+['Méthodologie et échantillon','Quel échantillonnage est non probabiliste ?',['Stratifié','Par grappes','Par quotas'],2,'Non probabilistes : convenance, raisonné, boule de neige, quotas.'],
+['Méthodologie et échantillon','Pour comprendre des perceptions en profondeur, on choisit plutôt…',['Une approche qualitative','Une approche exclusivement statistique','Aucune approche'],0,'Le qualitatif explore le sens, les expériences et les perceptions.'],
+['Collecte, qualité et éthique','À quoi sert le prétest ?',['Décorer le questionnaire','Repérer les problèmes de l\'instrument avant la collecte','Remplacer l\'échantillon'],1,'Il permet de corriger les questions ambiguës.'],
+['Collecte, qualité et éthique','Un consentement éclairé signifie…',['Le participant est informé et accepte librement','Le chercheur décide seul','Le participant signe sans lire'],0,'Il inclut objectif, droit de retrait, confidentialité.'],
+['Collecte, qualité et éthique','Le droit de retrait permet au participant de…',['Quitter l\'étude à tout moment','Modifier les résultats','Corriger le chercheur'],0,'La participation est volontaire.'],
+['Collecte, qualité et éthique','Un instrument fiable donne…',['Des résultats cohérents et stables','Toujours des résultats positifs','Des résultats aléatoires'],0,'Fiabilité = constance ; validité = mesure ce qu\'il prétend mesurer.'],
+['Résultats et discussion','Résultat et interprétation…',['Sont identiques','Sont distincts : on décrit d\'abord, on explique ensuite','Se rédigent dans l\'introduction'],1,'Les résultats décrivent ; la discussion interprète.'],
+['Résultats et discussion','Que fait-on dans la discussion ?',['On compare avec la littérature et on interprète','On présente de nouveaux résultats','On recopie les tableaux'],0,'Résultat → comparaison → interprétation → explication → implications.'],
+['Résultats et discussion','Un bon tableau est…',['Numéroté, titré et commenté','Sans titre','Copié sans source'],0,'Chaque tableau ou figure est numéroté, titré et commenté.'],
+['Plagiat et IA','Bonne méthode de paraphrase ?',['Remplacer quelques mots','Lire, fermer la source, reformuler, comparer, citer','Copier puis changer l\'ordre'],1,'Une paraphrase reste à citer.'],
+['Plagiat et IA','L\'IA te suggère une référence. Que fais-tu ?',['Je la copie','Je la vérifie dans la source originale','Je la cite sans DOI'],1,'Les IA peuvent inventer références et citations.'],
+['Plagiat et IA','Réutiliser sans citer un de ses anciens travaux s\'appelle…',['Autoplagiat','Paraphrase','Synthèse'],0,'L\'autoplagiat est une faute d\'intégrité.'],
+['Plagiat et IA','Inventer des données est…',['Une simplification','Une fabrication, faute grave','Acceptable si petit'],1,'Fabrication et falsification sont des fautes graves.'],
+['Word et Zotero','Pourquoi utiliser les styles Word ?',['Pour générer automatiquement la table des matières','Pour décorer','Pour réduire les pages'],0,'Les styles Titre 1/2/3 alimentent la table des matières.'],
+['Word et Zotero','Que fait Zotero avec le plugin Word ?',['Insère citations et bibliographie, change de style','Écrit le mémoire','Corrige l\'orthographe'],0,'Il gère citations, bibliographie et style.'],
+['Word et Zotero','Quelle norme bibliographique choisir ?',['La plus courte','Celle imposée par l\'établissement','Un mélange'],1,'La norme officielle prime et on ne mélange pas les normes.'],
+['Soutenance','Une bonne présentation de soutenance comprend…',['Problème, méthode, résultats, limites, recommandations','Tout le texte du mémoire','Uniquement la conclusion'],0,'Synthétise et respecte le temps imparti.'],
+['Soutenance','Face à une question difficile du jury…',['On invente','On reste calme, on reformule et on justifie honnêtement','On change de sujet'],1,'Reconnaître les limites vaut mieux que bluffer.']];
+const THEMES=[...new Set(QZ.map(q=>q[0]))];
+let Q=null;
+const JU=[
+['Choix du sujet','Pourquoi avez-vous choisi ce sujet ?','Lie motivation personnelle et intérêt scientifique ou social.'],
+['Choix du sujet','Pourquoi ce sujet est-il pertinent aujourd\'hui ?','Appuie-toi sur le contexte et des données récentes.'],
+['Choix du sujet','Pourquoi cette population ?','Justifie l\'accessibilité et la pertinence.'],
+['Choix du sujet','Pourquoi ce lieu et cette période ?','Explique la délimitation et sa faisabilité.'],
+['Choix du sujet','Qu\'est-ce qui distingue votre sujet des travaux existants ?','Cite la lacune identifiée.'],
+['Choix du sujet','Comment avez-vous délimité votre sujet ?','Reprends qui, quoi, où, quand.'],
+['Problématique et hypothèses','Quel est le problème central de votre recherche ?','Formule-le en 2 phrases.'],
+['Problématique et hypothèses','Comment êtes-vous passé du problème à la question de recherche ?','Montre la logique : lacune → question.'],
+['Problématique et hypothèses','Votre question de recherche est-elle réalisable ?','Parle de temps, accès, ressources.'],
+['Problématique et hypothèses','Pourquoi ces hypothèses ?','Relie-les à la littérature.'],
+['Problématique et hypothèses','Quelles sont vos variables indépendante et dépendante ?','Réponds précisément.'],
+['Problématique et hypothèses','Vos hypothèses sont-elles confirmées ?','Distingue confirmé, partiellement confirmé, infirmé.'],
+['Problématique et hypothèses','Que se passe-t-il si une hypothèse est infirmée ?','Une hypothèse infirmée reste un résultat.'],
+['Problématique et hypothèses','Pourquoi ces indicateurs ?','Justifie le lien avec la variable.'],
+['Cadre théorique et littérature','Pourquoi cette théorie ?','Explique ce qu\'elle apporte à l\'analyse.'],
+['Cadre théorique et littérature','Quelles autres théories auriez-vous pu utiliser ?','Montre que tu connais les alternatives.'],
+['Cadre théorique et littérature','Comment avez-vous appliqué la théorie à vos données ?','Donne un exemple concret.'],
+['Cadre théorique et littérature','Comment avez-vous sélectionné vos sources ?','Critères : fiabilité, pertinence, actualité.'],
+['Cadre théorique et littérature','Quelles divergences avez-vous trouvées entre auteurs ?','Cite deux positions et explique.'],
+['Cadre théorique et littérature','Quels concepts sont centraux ?','Définis-les avec des sources.'],
+['Cadre théorique et littérature','Quelle lacune votre recherche comble-t-elle ?','Sois modeste et précis.'],
+['Méthodologie','Pourquoi cette approche (quanti, quali, mixte) ?','La question détermine l\'approche.'],
+['Méthodologie','Pourquoi ce type de recherche ?','Relie-le à l\'objectif.'],
+['Méthodologie','Pourquoi cet échantillon ?','Justifie la méthode et la taille.'],
+['Méthodologie','Votre échantillon est-il représentatif ?','Reconnais la portée et les limites.'],
+['Méthodologie','Pourquoi cet instrument de collecte ?','Cohérence avec les indicateurs.'],
+['Méthodologie','Comment avez-vous validé votre instrument ?','Prétest, relecture d\'experts.'],
+['Méthodologie','Comment avez-vous assuré la fiabilité ?','Cohérence, procédure standardisée.'],
+['Méthodologie','Comment avez-vous traité les données ?','Décris étapes et outils.'],
+['Méthodologie','Quels biais pouvaient influencer les résultats ?','Cite des biais et comment les limiter.'],
+['Méthodologie','Comment avez-vous respecté l\'éthique ?','Consentement, anonymat, autorisations.'],
+['Résultats et discussion','Quel est votre principal résultat ?','Réponds en une phrase.'],
+['Résultats et discussion','Ce résultat vous a-t-il surpris ?','Explique sans te justifier à tout prix.'],
+['Résultats et discussion','Vos résultats concordent-ils avec la littérature ?','Compare avec précision.'],
+['Résultats et discussion','Comment expliquez-vous cette différence ?','Propose des explications plausibles.'],
+['Résultats et discussion','Peut-on généraliser vos résultats ?','Sois prudent : dépend de l\'échantillon.'],
+['Résultats et discussion','Corrélation ou causalité ?','Ne conclus pas à la causalité sans preuve.'],
+['Résultats et discussion','Quelles données contredisent votre interprétation ?','Montre ton esprit critique.'],
+['Résultats et discussion','Que retirez-vous de vos résultats qualitatifs/quantitatifs ?','Relie à la question de recherche.'],
+['Limites, éthique et contribution','Quelles sont les limites de votre recherche ?','Cite-en 2 ou 3 honnêtement.'],
+['Limites, éthique et contribution','Que referiez-vous autrement ?','Montre ce que tu as appris.'],
+['Limites, éthique et contribution','Quelle est votre principale contribution ?','Théorique, pratique ou méthodologique.'],
+['Limites, éthique et contribution','Quelles recommandations formulez-vous ?','Déduites des résultats.'],
+['Limites, éthique et contribution','À qui sert votre recherche ?','Institutions, praticiens, chercheurs.'],
+['Limites, éthique et contribution','Quelles pistes pour de futures recherches ?','Liées aux limites.'],
+['Limites, éthique et contribution','Comment avez-vous évité le plagiat ?','Citations, Zotero, vérification.'],
+['Parcours et ouverture','Quelle a été votre plus grande difficulté ?','Montre comment tu l\'as surmontée.'],
+['Parcours et ouverture','Comment utilisez-vous l\'IA dans votre travail ?','Réponds honnêtement, avec vérification des sources.'],
+['Parcours et ouverture','Résumez votre mémoire en 1 minute.','Problème, méthode, résultat, contribution.'],
+['Parcours et ouverture','Quelle question auriez-vous aimé qu\'on vous pose ?','Prépare une réponse forte.']];
+let JF='Toutes';
+let tab='home';
+function nav(){$('#nav').innerHTML=TABS.map(t=>`<button class="${t[0]==tab?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')}
+function go(t){tab=t;nav();window.scrollTo(0,0);R[t]()}
+const det=(a,o)=>a.map(([t,l],i)=>`<details ${o&&i==0?'open':''}><summary>${t}</summary><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></details>`).join('');
+const R={
+home(){$('#main').innerHTML=`<div class="card"><h3>Bienvenue sur « Mémoire de A à Z »</h3><p>Réaliser un mémoire peut sembler complexe quand on ne sait pas par où commencer. Cette plateforme te guide étape par étape, du sujet à la soutenance : <em>ce que tu dois faire, comment, pourquoi, et comment vérifier.</em></p>
+<button class="btn" onclick="go('exo')">🧪 Faire le quiz</button><button class="btn" onclick="go('cert')">🏅 Mon certificat</button><button class="btn" onclick="go('parcours')">🚀 Commencer mon mémoire</button><button class="btn alt" onclick="go('cours')">📚 Cours de méthodologie</button><button class="btn alt" onclick="go('outils')">🧰 Boîte à outils</button><button class="btn alt" onclick="go('biblio')">📖 Bibliothèque</button><button class="btn alt" onclick="go('modeles')">📝 Modèles</button><button class="btn alt" onclick="go('biblio')">❓ FAQ</button></div>
+<div class="grid"><div class="card"><h3>🧭 20 étapes</h3><p class="mut">Un parcours progressif avec suivi.</p></div><div class="card"><h3>🧪 Exercices</h3><p class="mut">Quiz et simulateur de projet.</p></div><div class="card"><h3>✅ Checklists</h3><p class="mut">Avant collecte et avant dépôt.</p></div></div>`},
+parcours(){const d=store.get('steps',[]);const p=Math.round(d.length/STEPS.length*100);
+$('#main').innerHTML=`<div class="card"><b>Ma progression : ${d.length}/${STEPS.length}</b><div class="bar"><i style="width:${p}%"></i></div></div>`+STEPS.map((s,i)=>`<details class="step"><summary><span class="n">${i+1}</span>${s[0]} ${s[1]} ${d.includes(i)?'✔️':''}</summary><span class="k">À faire</span>${s[2]}<span class="k">Pourquoi</span>${s[3]}<span class="k">Vérifier</span>${s[4]}<br><button class="btn alt" onclick="tog(${i})">${d.includes(i)?'Marquer non fait':'Marquer comme fait'}</button></details>`).join('')},
+cours(){$('#main').innerHTML=det(COURS,1)},
+outils(){$('#main').innerHTML=det(OUTILS,1)},
+modeles(){$('#main').innerHTML='<p class="mut">Appuie sur « Copier » puis colle dans Word ou Google Docs.</p>'+MODELES.map((m,i)=>`<div class="card"><h3>📄 ${m[0]}</h3><pre id="m${i}">${m[1]}</pre><button class="btn" onclick="cp(${i},this)">Copier</button></div>`).join('')},
+exo(){Q=null;const best=store.get('best',null);
+$('#main').innerHTML=`<div class="card"><h3>🧪 Quiz : ${QZ.length} questions</h3><p class="mut">Choisis un thème ou lance le quiz complet. Explication après chaque réponse.${best!==null?' Meilleur score : '+best+'%.':''}</p>
+<button class="btn" onclick="qstart()">Quiz complet</button>${THEMES.map(t=>`<button class="btn alt" onclick="qstart('${t}')">${t}</button>`).join('')}</div>
+<div class="card"><h3>Tableau variables / indicateurs</h3><div class="wrap"><table><tr><th>Concept</th><th>Variable</th><th>Dimension</th><th>Indicateur</th><th>Mesure</th></tr><tr><td>Stress</td><td>Niveau de stress</td><td>Intensité</td><td>Fréquence des symptômes</td><td>Échelle</td></tr><tr><td><input placeholder="Ton concept"></td><td><input></td><td><input></td><td><input></td><td><input></td></tr></table></div></div>`},
+jury(){const cats=['Toutes',...new Set(JU.map(q=>q[0]))];
+$('#main').innerHTML=`<div class="card"><h3>🎤 ${JU.length} questions que le jury peut poser</h3><p class="mut">Filtre par thème, prépare ta réponse, puis compare avec le conseil (touche la question).</p>${cats.map(c=>`<button class="btn ${c==JF?'':'alt'}" onclick="JF='${c}';R.jury()">${c}</button>`).join('')}</div>`+JU.filter(q=>JF=='Toutes'||q[0]==JF).map((q,i)=>`<details><summary>${q[1]}</summary><span class="k">${q[0]}</span><p>💡 ${q[2]}</p></details>`).join('')},
+cert(pv){if(!store.get('done')&&!pv){$('#main').innerHTML=`<div class="card"><h3>🏅 Certificat de participation</h3><p>Le certificat se débloque à la fin du quiz complet (${QZ.length} questions).</p><button class="btn" onclick="go('exo');qstart()">Lancer le quiz complet</button><button class="btn alt" onclick="R.cert(1)">👁️ Voir un aperçu du certificat</button></div>`;return}
+$('#main').innerHTML=`<div class="card noprint"><h3>🏅 Ton certificat</h3>${store.get('done')?'':'<p class="mut">👁️ Aperçu : le certificat officiel se débloque après le quiz complet.</p>'}<label>Nom complet du participant</label><input id="cn" value="${(store.get('cname','')).replace(/"/g,'&quot;')}" placeholder="Prénom NOM" oninput="store.set('cname',this.value);cdraw()"><button class="btn" onclick="try{window.print()}catch(e){}">🖨️ Imprimer / Enregistrer en PDF</button><p class="mut">Dans la fenêtre d'impression, choisis « Enregistrer au format PDF », en paysage.</p></div><div id="cbox"></div>`;cdraw()},
+simu(){$('#main').innerHTML=`<div class="card"><h3>🎓 Construis ton projet</h3><p class="mut">Remplis les champs : tu obtiens une fiche de travail à vérifier et développer toi-même.</p>
+${[['dom','Domaine'],['the','Thème'],['pop','Population'],['lie','Lieu'],['phe','Phénomène'],['pro','Quel problème souhaites-tu étudier ?'],['que','Quelle question souhaites-tu poser ?'],['app','Approche envisagée (quanti/quali/mixte)'],['var','Variables à étudier']].map(f=>`<label>${f[1]}</label><input id="f_${f[0]}" value="${store.get('sim',{})[f[0]]||''}">`).join('')}
+<button class="btn" onclick="fiche()">Générer la fiche</button></div><div id="fic"></div>`},
+check(){const c=store.get('chk',{});
+const blk=(t,items)=>`<div class="card"><h3>${t}</h3>${items.map(x=>`<label class="chk"><input type="checkbox" ${c[t+x]?'checked':''} onchange="ck('${t}','${x.replace(/'/g,"\\'")}',this.checked)"><span style="font-weight:400">${x}</span></label>`).join('')}</div>`;
+const tot=CH_FIN.Contenu.length+CH_FIN['Références'].length+CH_FIN['Présentation'].length;const done=Object.keys(CH_FIN).reduce((a,k)=>a+CH_FIN[k].filter(x=>c[k+x]).length,0);
+$('#main').innerHTML=blk('📥 Avant la collecte',CH_COL)+`<div class="card"><b>Avant le dépôt : ${done}/${tot}</b><div class="bar"><i style="width:${done/tot*100}%"></i></div></div>`+Object.keys(CH_FIN).map(k=>blk(k,CH_FIN[k])).join('')},
+univ(){const u=store.get('univ',{});const F=['Université','Faculté','Département','Niveau','Type de mémoire','Nombre de pages','Structure demandée','Norme bibliographique','Nombre de chapitres','Police / interligne / marges','Format de couverture','Règles de soutenance'];
+$('#main').innerHTML=`<div class="card"><h3>🏛️ Adapter le mémoire à mon université</h3><p class="mut">Il n\'existe pas de structure universelle. Recopie ici les consignes officielles de ton département : elles priment sur les recommandations générales de ce site. Elles restent enregistrées dans ton navigateur.</p>${F.map((f,i)=>`<label>${f}</label><input value="${(u[f]||'').replace(/"/g,'&quot;')}" oninput="uv('${f}',this.value)">`).join('')}</div>`},
+biblio(){$('#main').innerHTML=det([['📚 Sources pour apprendre la méthodologie',['Privilégier : ouvrages universitaires, articles scientifiques, guides institutionnels, manuels de méthodologie, documentation officielle des logiciels, normes officielles, ressources de ton université.','Pour Zotero, Word, LibreOffice ou Google Docs, consulte la documentation officielle.']],['❓ Questions fréquentes',['Combien de pages ? Cela dépend de ton département.','Quelle norme choisir ? Celle imposée par ton établissement.','Puis-je utiliser l\'IA ? Selon les règles de ton établissement, et jamais comme source non vérifiée.','Puis-je changer de sujet en cours de route ? Oui, mais dis-le tôt à ton encadreur.','Quanti ou quali ? Selon ta question de recherche.']]],1)}
+};
+function tog(i){let d=store.get('steps',[]);d=d.includes(i)?d.filter(x=>x!=i):[...d,i];store.set('steps',d);R.parcours()}
+function cp(i,b){const t=$('#m'+i).innerText;try{navigator.clipboard.writeText(t).then(()=>b.textContent='Copié ✔️')}catch(e){b.textContent='Copie impossible'}}
+function qstart(t){const l=QZ.filter(q=>!t||q[0]==t);Q={l:l,i:0,s:0,t:t,d:false};qshow()}
+function qshow(){const q=Q.l[Q.i];if(!q){const pc=Math.round(Q.s/Q.l.length*100);if(!Q.t){store.set('done',true);store.set('nev',store.get('nev',0)+1);if(pc>(store.get('best',0)||0))store.set('best',pc)}
+$('#main').innerHTML=`<div class="card"><h3>Résultat : ${Q.s}/${Q.l.length} (${pc}%)</h3><p>${pc>=80?'Excellent : tu maîtrises les bases.':pc>=50?'Bien, revois les points manqués dans les cours.':'Reprends les cours puis retente le quiz.'}</p>${Q.t?'':'<button class="btn" onclick="go(\'cert\')">🏅 Obtenir mon certificat</button>'}<button class="btn alt" onclick="qstart(Q.t)">Recommencer</button><button class="btn alt" onclick="R.exo()">Retour</button></div>`;return}
+$('#main').innerHTML=`<div class="card"><span class="k">${q[0]} · ${Q.i+1}/${Q.l.length} · score ${Q.s}</span><div class="bar"><i style="width:${Q.i/Q.l.length*100}%"></i></div><h3>${q[1]}</h3>${q[2].map((o,j)=>`<button class="btn alt" style="display:block;text-align:left;width:100%" onclick="qans(${j})">${o}</button>`).join('')}<div id="qr"></div></div>`}
+function qans(j){if(Q.d)return;Q.d=true;store.set('nq',store.get('nq',0)+1);const q=Q.l[Q.i];const ok=j==q[3];if(ok)Q.s++;
+$('#qr').innerHTML=`<p>${ok?'<b class="good">✔️ Correct</b>':'<b class="bad">✖️ Incorrect</b> — réponse : '+q[2][q[3]]}</p><p class="mut">${q[4]}</p><button class="btn" onclick="Q.i++;Q.d=false;qshow()">${Q.i+1<Q.l.length?'Suivant':'Voir le résultat'}</button>`}
+function ck(t,x,v){const c=store.get('chk',{});c[t+x]=v;store.set('chk',c);R.check()}
+function uv(f,v){const u=store.get('univ',{});u[f]=v;store.set('univ',u)}
+function fiche(){const k=['dom','the','pop','lie','phe','pro','que','app','var'];const v={};k.forEach(x=>v[x]=$('#f_'+x).value||'…');store.set('sim',v);
+$('#fic').innerHTML=`<div class="card"><h3>Fiche de travail</h3><pre>SUJET : ${v.the} chez ${v.pop}, ${v.lie} (${v.dom})
+PHÉNOMÈNE : ${v.phe}
+PROBLÈME : ${v.pro}
+QUESTION : ${v.que}
+APPROCHE : ${v.app}
+VARIABLES : ${v.var}
+À DÉVELOPPER : contexte, littérature, hypothèses, indicateurs, échantillon, instrument.</pre><p class="mut">Cette fiche est un point de départ : à toi de la vérifier et de l\'approfondir.</p></div>`}
+function esc(t){return t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function cdraw(){const nm=esc((store.get('cname','')||'[NOM COMPLET DU PARTICIPANT]').trim());const sec=store.get('secs',0),h=Math.floor(sec/3600),m=Math.floor(sec%3600/60);
+const vol=h+' heure'+(h>1?'s':'')+' '+String(m).padStart(2,'0')+' minute'+(m>1?'s':'');const mods=store.get('steps',[]).length;
+const fs=Math.max(26,Math.min(72,760/(nm.length*.45)));const D='#1c1a22',G='#cfac5c';
+const st=(x,v,l)=>`<text x="${x}" y="500" text-anchor="middle" font-family="Open Sans,Arial,sans-serif" font-weight="800" font-size="17" fill="${D}">${v}</text><text x="${x}" y="518" text-anchor="middle" font-family="Open Sans,Arial,sans-serif" font-size="11" fill="#555">${l}</text>`;
+const T='font-family="Open Sans,Arial Black,Arial,sans-serif" text-anchor="middle" fill="'+D+'"';
+$('#cbox').innerHTML=`<svg viewBox="0 0 1000 707" style="width:100%;height:auto;background:#fff;border:1px solid var(--br)" xmlns="http://www.w3.org/2000/svg">
+<rect width="1000" height="707" fill="#fff"/><rect x="30" y="30" width="940" height="647" fill="none" stroke="#000" stroke-width="7"/>
+<g id="cw"><path d="M540 0H1000V420C960 350 930 300 880 240 820 170 740 90 540 0Z" fill="${G}"/><path d="M700 0H1000V300C960 250 920 200 870 150 820 100 770 40 700 0Z" fill="${D}"/><path d="M640 0C760 60 820 140 880 230 920 290 960 330 1000 370" fill="none" stroke="${D}" stroke-width="5"/></g>
+<use href="#cw" transform="rotate(180 500 353.5)"/>
+<polygon points="105,190 135,190 120,245" fill="#e9d48a"/><polygon points="145,190 175,190 165,245" fill="#e9d48a"/>
+<circle cx="140" cy="140" r="62" fill="${G}"/><circle cx="140" cy="140" r="52" fill="#000"/>
+<text x="140" y="134" ${T.replace(D,'#fff')} font-weight="800" font-size="15">MÉMOIRE</text><text x="140" y="154" ${T.replace(D,'#fff')} font-weight="800" font-size="15">DE A À Z</text>
+<circle cx="440" cy="78" r="20" fill="none" stroke="${G}" stroke-width="3"/><text x="440" y="85" ${T.replace(D,G)} font-weight="800" font-size="20">M</text>
+<text x="472" y="76" font-family="Open Sans,Arial,sans-serif" font-weight="800" font-size="19" fill="${D}">MARC COLBERT PIERRE</text><text x="472" y="94" font-family="Open Sans,Arial,sans-serif" font-size="12" fill="#444" letter-spacing="1">MÉMOIRE DE A À Z</text>
+<text x="500" y="182" ${T} font-weight="800" font-size="70" letter-spacing="4">CERTIFICAT</text>
+<text x="500" y="232" ${T} font-weight="800" font-size="36" letter-spacing="3">DE PARTICIPATION</text>
+<text x="500" y="272" ${T} font-style="italic" font-size="16">Ce certificat est décerné à</text>
+<text x="500" y="345" font-family="Great Vibes,Brush Script MT,cursive" text-anchor="middle" font-size="${fs}" fill="${D}">${nm}</text>
+<line x1="230" y1="362" x2="770" y2="362" stroke="#444" stroke-width="1.5"/>
+<g ${T} font-weight="400" font-size="14.5"><text x="500" y="392">pour avoir participé avec assiduité au programme de formation « Mémoire de A à Z »,</text><text x="500" y="412">consacré à l'apprentissage des démarches méthodologiques nécessaires à la conception,</text><text x="500" y="432">à la réalisation, à la rédaction et à la finalisation d'un mémoire de recherche.</text></g>
+${st(300,vol,'Volume horaire')}${st(440,mods,'Modules complétés')}${st(580,store.get('nq',0),'Exercices réalisés')}${st(720,store.get('nev',0),'Évaluations complétées')}
+<text x="500" y="558" ${T} font-weight="400" font-size="14">Date de délivrance : ${new Date().toLocaleDateString('fr-FR')}</text>
+<g transform="translate(480 618)" fill="#0d2ea8" stroke="none" font-family="Georgia,Times New Roman,serif" font-weight="700"><defs><path id="sa" d="M-33 0A33 33 0 0 1 33 0"/><path id="sb" d="M-41 0A41 41 0 0 0 41 0"/></defs>
+<circle r="50" fill="none" stroke="#0d2ea8" stroke-width="4"/><circle r="45.5" fill="none" stroke="#0d2ea8" stroke-width="1"/><circle r="28" fill="none" stroke="#0d2ea8" stroke-width="1.6"/>
+<text font-size="9" letter-spacing=".6" text-anchor="middle"><textPath href="#sa" startOffset="50%">MARC COLBERT PIERRE</textPath></text>
+<text font-size="8.5" font-style="italic" text-anchor="middle"><textPath href="#sb" startOffset="50%">Mémoire de A à Z</textPath></text>
+<text x="-38" y="3.5" font-size="8" text-anchor="middle">★</text><text x="38" y="3.5" font-size="8" text-anchor="middle">★</text>
+<g transform="translate(0 -4)"><path d="M-1-5C-6-11-14-12-21-9V8C-14 5-6 6-1 12Z M1-5C6-11 14-12 21-9V8C14 5 6 6 1 12Z" fill="#0d2ea8"/><path d="M-23 11C-14 8-6 9 0 15C6 9 14 8 23 11V14C14 12 6 13 0 19C-6 13-14 12-23 14Z" fill="#0d2ea8"/><g fill="none" stroke="#fff" stroke-width=".9" stroke-linecap="round"><path d="M-17-5Q-11-7-5-3M-17-1Q-11-3-5 1M-17 3Q-11 1-5 5M17-5Q11-7 5-3M17-1Q11-3 5 1M17 3Q11 1 5 5"/></g></g></g>
+<g fill="none" stroke="#0d2ea8" stroke-linecap="round" stroke-linejoin="round" transform="translate(770 628)"><path d="M-102 8C-82 -8 -62 -28 -46 -40" stroke-width="1.8"/><path d="M-80 4C-60 -14 -40 -24 -30 -14" stroke-width="1.4"/><path d="M-100 12C-40 4 30 -4 100 -12C112 -16 106 -30 88 -26C70 -22 92 -4 112 -14" stroke-width="1.6"/></g>
+<text x="770" y="628" text-anchor="middle" font-family="Mrs Saint Delafield,Great Vibes,cursive" font-size="54" fill="#0d2ea8" transform="rotate(-5 770 628)">Wadley Pierre</text>
+<line x1="665" y1="640" x2="885" y2="640" stroke="#0d2ea8" stroke-width="1.5"/>
+<text x="775" y="656" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-weight="700" font-size="14" fill="#0d2ea8">Wadley PIERRE</text><text x="775" y="669" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-style="italic" font-size="11.5" fill="#0d2ea8">Directeur du programme</text></svg>`}
+setInterval(()=>{if(!document.hidden)store.set('secs',store.get('secs',0)+15)},15000);
+nav();R.home();
+</script></body></html>
